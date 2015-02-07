@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import requests
 import matplotlib.pyplot as plt
 import sqlite3 as lite
+import math
+
 
 
 
@@ -65,9 +67,9 @@ plt.show()
 
 un_df = pd.read_csv('ny.gdp.mktp.cd_Indicator_en_csv_v2.csv', skiprows = 2)
 con.execute("DROP TABLE IF EXISTS gdp;")
-un_df.to_sql('gdp', con, if_exists'replace') # note that you can access the column names with [xxx] 
+un_df.to_sql('gdp', con, if_exists = 'replace') # note that you can access the column names with [xxx] 
 
-df2 = pd.read_sql_query('select Men, Women, [1999], [2000], [2001], [2002], [2003], [2004], [2005], [2006], [2007], [2008], [2009], [2010] from education_indicators inner join gdp on country = [Country Name] ', con)
+df2 = pd.read_sql_query('select country, Men, Women, [1999], [2000], [2001], [2002], [2003], [2004], [2005], [2006], [2007], [2008], [2009], [2010] from education_indicators inner join gdp on country = [Country Name] ', con)
 
 
 ##  df2[df_val] = df2[df_val].map(lambda x: math.log(x))
@@ -86,6 +88,10 @@ df2['2008'] = df2['2008'].map(lambda x: math.log(x))
 df2['2009'] = df2['2009'].map(lambda x: math.log(x))
 df2['2010'] = df2['2010'].map(lambda x: math.log(x))
 
+scatter=ax.scatter(df2['Men'], df2['2007'], s=50, alpha=0.5)#, s=area, c=colors, alpha=0.5)
+plt.ylabel('GDP') 
+plt.xlabel('Life Expectancy')
 df2.plot()
-plt.show
+
+
 
