@@ -93,5 +93,7 @@ plt.ylabel('GDP')
 plt.xlabel('Life Expectancy')
 df2.plot()
 
-
+# the correlationis always returning nan,1 !
+from scipy.stats.stats import pearsonr   
+pearsonr(df2['Women'], df2['2004'])
 
